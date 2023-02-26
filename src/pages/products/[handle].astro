@@ -1,0 +1,39 @@
+---
+import Medusa from '@medusajs/medusa-js'
+
+interface Param {
+  params: {
+    handle: string
+  }
+}
+
+export async function getStaticPaths() {
+  const baseUrl = import.meta.env.MEDUSA_URL
+  const client = new Medusa({ baseUrl, maxRetries: 3 })
+  const res = await client.products.list()
+  const products = res.products
+
+  return products.reduce<Param[]>(
+    (acc, product) => product.handle
+      ? [
+        ...acc,
+        {
+          params: {
+            handle: product.handle
+          },
+          props: {
+            product
+          }
+        }
+      ]
+      : acc,
+    []
+  );
+}
+
+const { product } = Astro.props;
+---
+<div>{ product.title }!
+  <p>{product.description}</p>
+  <img src={product.thumbnail} />
+</div>
