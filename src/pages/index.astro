@@ -1,4 +1,11 @@
 ---
+import Medusa from '@medusajs/medusa-js'
+
+const baseUrl = import.meta.env.MEDUSA_URL
+const client = new Medusa({ baseUrl, maxRetries: 3 })
+const res = await client.products.list()
+
+const products = res.products
 ---
 
 <html lang="en">
@@ -11,5 +18,16 @@
 	</head>
 	<body>
 		<h1>Astro</h1>
+		{
+			products.map((product) => {
+				return (
+					<div>
+						<h2><a href={`/products/${product.handle}`}>{product.title}</a></h2>
+						<p>{product.description}</p>
+						<img src={product.thumbnail} />
+					</div>
+				)
+			})
+		}
 	</body>
 </html>
