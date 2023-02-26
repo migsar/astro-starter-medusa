@@ -10,6 +10,13 @@
 		"astro": "astro"
 	},
 	"dependencies": {
-		"astro": "^2.0.15"
+		"@babel/core": "7.x",
+		"@medusajs/medusa": "^1.7.8",
+		"@medusajs/medusa-js": "^1.3.10",
+		"astro": "^2.0.15",
+		"medusa-core-utils": "^1.1.39",
+		"medusa-interfaces": "^1.3.6",
+		"redis-commands": "^1.7.0",
+		"typeorm": "0.2.x"
 	}
 }
