@@ -2,14 +2,17 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { defineConfig } from 'astro/config';
 
-// https://astro.build/config
 import tailwind from "@astrojs/tailwind";
+import image from "@astrojs/image";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind()],
+  integrations: [
+    tailwind(),
+    image(),
+  ],
   vite: {
     resolve: {
       alias: {
