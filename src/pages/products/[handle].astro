@@ -1,6 +1,8 @@
 ---
 import Medusa from '@medusajs/medusa-js'
 
+import Layout from '~/layouts/base.astro';
+
 interface Param {
   params: {
     handle: string
@@ -32,8 +34,14 @@ export async function getStaticPaths() {
 }
 
 const { product } = Astro.props;
+const meta = {
+  title: `Astro storefront for Medusa: ${product.title}`,
+  description: product.description,
+};
 ---
-<div>{ product.title }!
-  <p>{product.description}</p>
-  <img src={product.thumbnail} />
-</div>
+<Layout meta={meta}>
+  <div>{ product.title }!
+    <p>{product.description}</p>
+    <img src={product.thumbnail} />
+  </div>
+</Layout>
