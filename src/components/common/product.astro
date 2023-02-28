@@ -1,0 +1,17 @@
+---
+import Thumbnail from "./thumbnail.astro";
+
+const { product } = Astro.props;
+const { handle, description, thumbnail, title } = product;
+---
+<div class="w-96">
+  <a href={`/products/${handle}`}>
+    <figure>
+      <Thumbnail src={thumbnail} alt={title} />
+    </figure>
+    <div>
+      <h2>{title}</h2>
+      <p>{description}</p>
+    </div>
+  </a>
+</div>

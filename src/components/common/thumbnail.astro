@@ -1,0 +1,8 @@
+---
+import { Image } from '@astrojs/image/components';
+
+const THUMBNAIL_WIDTH = 240;
+
+const { src, alt } = Astro.props;
+---
+<Image src={src} width={THUMBNAIL_WIDTH} aspectRatio={1} format="png" alt={alt} />
