@@ -7,8 +7,11 @@ specifiers:
   '@medusajs/medusa': ^1.7.8
   '@medusajs/medusa-js': ^1.3.10
   astro: ^2.0.15
+  autoprefixer: ^10.4.13
+  daisyui: ^2.51.2
   medusa-core-utils: ^1.1.39
   medusa-interfaces: ^1.3.6
+  postcss: ^8.4.21
   redis-commands: ^1.7.0
   tailwindcss: ^3.0.24
   typeorm: 0.2.x
@@ -20,8 +23,11 @@ dependencies:
   '@medusajs/medusa': 1.7.8_zckf55bruime6mn4feqtpsf6qi
   '@medusajs/medusa-js': 1.3.10_@medusajs+medusa@1.7.8
   astro: 2.0.15
+  autoprefixer: 10.4.13_postcss@8.4.21
+  daisyui: 2.51.2_gbtt6ss3tbiz4yjtvdr6fbrj44
   medusa-core-utils: 1.1.39
   medusa-interfaces: 1.3.6_pwv3tzchbfeb2cgfy4pfh65p7y
+  postcss: 8.4.21
   redis-commands: 1.7.0
   tailwindcss: 3.2.7
   typeorm: 0.2.45
@@ -2096,6 +2102,14 @@ packages:
       color-string: 1.9.1
     dev: false
 
+  /color/4.2.3:
+    resolution: {integrity: sha512-1rXeuUUiGGrykh+CeBdu5Ie7OJwinCgQY0bc7GCRxy5xVHy+moaqkpL/jqQq0MtQOeYcrqEz4abc5f0KtU7W4A==}
+    engines: {node: '>=12.5.0'}
+    dependencies:
+      color-convert: 2.0.1
+      color-string: 1.9.1
+    dev: false
+
   /colorspace/1.1.4:
     resolution: {integrity: sha512-BgvKJiuVu1igBUF2kEjRCZXol6wiiGbY5ipL/oVPwm0BL9sIpMIzM8IK7vwuxIIzOXMV3Ey5w+vxhm0rR/TN8w==}
     dependencies:
@@ -2252,10 +2266,33 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
+  /css-selector-tokenizer/0.8.0:
+    resolution: {integrity: sha512-Jd6Ig3/pe62/qe5SBPTN8h8LeUg/pT4lLgtavPf7updwwHpvFzxvOQBHYj2LZDMjUnBzgvIUSjRcf6oT5HzHFg==}
+    dependencies:
+      cssesc: 3.0.0
+      fastparse: 1.1.2
+    dev: false
+
   /cssesc/3.0.0:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
     engines: {node: '>=4'}
     hasBin: true
+    dev: false
+
+  /daisyui/2.51.2_gbtt6ss3tbiz4yjtvdr6fbrj44:
+    resolution: {integrity: sha512-Jnfknn9HrOBNzj1kUI9g/kqNSA5oP5B/r6X4Ff/cdMO27glisO2Oi9QAO8hKwMN9LzfWGdfyqvJGvc3Ji78CXA==}
+    peerDependencies:
+      autoprefixer: ^10.0.2
+      postcss: ^8.1.6
+    dependencies:
+      autoprefixer: 10.4.13_postcss@8.4.21
+      color: 4.2.3
+      css-selector-tokenizer: 0.8.0
+      postcss: 8.4.21
+      postcss-js: 4.0.1_postcss@8.4.21
+      tailwindcss: 3.2.7
+    transitivePeerDependencies:
+      - ts-node
     dev: false
 
   /debug/2.6.9:
@@ -2785,6 +2822,10 @@ packages:
       glob-parent: 5.1.2
       merge2: 1.4.1
       micromatch: 4.0.5
+    dev: false
+
+  /fastparse/1.1.2:
+    resolution: {integrity: sha512-483XLLxTVIwWK3QTrMGRqUfUpoOs/0hbQrl2oz4J0pAcm3A3bu84wxTFqGqkJzewCLdME38xJLJAxBABfQT8sQ==}
     dev: false
 
   /fastq/1.15.0:
