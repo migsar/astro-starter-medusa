@@ -15,7 +15,9 @@ const meta = {
 };
 ---
 <Layout meta={meta}>
-  <div class="grid grid-cols-3 grid-rows-3">
-    { products.map((product) => (<Product product={product} />)) }
+  <div>
+    <div class="grid grid-cols-4 gap-0">
+      { products.map((product) => (<Product product={product} />)) }
+    </div>
   </div>
 </Layout>

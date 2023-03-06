@@ -4,14 +4,25 @@ import Thumbnail from "./thumbnail.astro";
 const { product } = Astro.props;
 const { handle, description, thumbnail, title } = product;
 ---
-<div class="w-96">
-  <a href={`/products/${handle}`}>
-    <figure>
-      <Thumbnail src={thumbnail} alt={title} />
-    </figure>
-    <div>
-      <h2>{title}</h2>
-      <p>{description}</p>
+
+<div class="product relative w-full">
+  <figure class="image">
+    <Thumbnail src={thumbnail} alt={title} />
+  </figure>
+  <div class="content absolute bottom-0 hidden bg-neutral-300/50 p-4 w-full">
+    <h2 class="pb-6">{title}</h2>
+    <p>{description}</p>
+    <div class="actions py-4">
+      <button class="btn">Add to cart</button>
+      <a href={`/products/${handle}`}>
+        <button class="btn">See details</button>
+      </a>
     </div>
-  </a>
+  </div>
 </div>
+
+<style>
+.product:hover .content {
+  display: block;
+}
+</style>
