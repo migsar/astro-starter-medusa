@@ -1,8 +1,9 @@
 ---
 import { Image } from '@astrojs/image/components';
 
-const THUMBNAIL_WIDTH = 480;
+const DEFAULT_WIDTH = 480;
 
-const { src, alt } = Astro.props;
+const { src, alt, width: rawWidth } = Astro.props;
+const width = rawWidth || DEFAULT_WIDTH;
 ---
-<Image src={src} width={THUMBNAIL_WIDTH} aspectRatio={1} format="png" alt={alt} />
+<Image src={src} width={DEFAULT_WIDTH} aspectRatio={1} format="png" alt={alt} />
