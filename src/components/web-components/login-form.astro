@@ -1,0 +1,72 @@
+---
+const strings = {
+  buttonLabel: "Log In"
+}
+
+const classes = {
+  inputField: 'input input-bordered w-full mb-4',
+}
+
+---
+<login-button>
+  <form class="m-auto w-full md:w-1/3 flex flex-col justify-center items-center">
+    <div class="">
+      <label for="email" class="block">Email</label>
+      <input id="email" type="email" name="email" class={classes.inputField} />
+    </div>
+    <div class="">
+      <label for="password" class="block">Password</label>
+      <input id="password" type="password" name="password" class={classes.inputField} />
+    </div>
+    <div class="">
+      <button type="button" class="btn">{ strings.buttonLabel }</button>
+    </div>
+  </form>
+</login-button>
+
+<script>
+  // Define the behaviour for our new type of HTML element.
+  class LoginButton extends HTMLElement {
+    constructor() {
+      super();
+
+      const button = this.querySelector('button');
+
+      if (!button) {
+        return;
+      }
+
+      button.addEventListener('click', () => {
+        fetch('http://localhost:9000/store/auth', {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: this.email,
+            password: this.password
+          })
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+          });
+      });
+    }
+
+    get email() {
+      const emailElement = this.querySelector('#email') as HTMLInputElement;
+
+      return emailElement.value;
+    }
+
+    get password() {
+      const passwordElement = this.querySelector('#password') as HTMLInputElement;
+
+      return passwordElement.value;
+    }
+  }
+
+  customElements.define('login-button', LoginButton);
+</script>
