@@ -26,7 +26,7 @@ Status color code:
 | Feature  | Status |
 | :------- | :----- |
 | SSG      | 🟡     |
-| Auth     | 🔴     |
+| Auth     | 🟡     |
 | Feedback | 🔴     |
 | Email    | 🔴     |
 | I18n     | 🔴     |
@@ -39,10 +39,10 @@ There is an overview diagram in this [Penpot](https://design.penpot.app/#/view/6
 
 | Route             | Path                 | Functionality Status | Design status |
 | :---------------- | :------------------- | :------------------- | :------------ |
-| Index             | `/`                  | 🟡                   | 🔴            |
+| Index             | `/`                  | 🟢                   | 🟢            |
 | Sign Up           | `/sign-up`           | 🟡                   | 🔴            |
-| Log In            | `/log-in`            | 🟡                   | 🔴            |
-| Log Out           | `/log-out`           | 🔴                   | 🔴            |
+| Log In            | `/log-in`            | 🟢                   | 🟢            |
+| Log Out           | `/log-out`           | 🟢                   | 🟢            |
 | Account index     | `/account`           | 🔴                   | 🔴            |
 | Account addresses | `/account/addresses` | 🔴                   | 🔴            |
 | Account profile   | `/account/profile`   | 🔴                   | 🔴            |
