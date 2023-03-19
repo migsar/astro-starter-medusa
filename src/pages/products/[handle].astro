@@ -1,47 +1,164 @@
 ---
-import Medusa from '@medusajs/medusa-js'
+import Medusa from '@medusajs/medusa-js';
 
 import Layout from '~/layouts/base.astro';
+import Thumbnail from '~/components/common/thumbnail.astro';
+
+import type { Product } from '@medusajs/medusa';
 
 interface Param {
   params: {
-    handle: string
-  }
+    handle: string;
+  };
 }
 
+const Classes = {
+  section: 'w-full md:w-1/3 p-4',
+};
+const Strings = {
+  addToCart: 'Add to cart',
+};
+const DEFAULT_VARIANT_TITLE = 'XL';
+
 export async function getStaticPaths() {
-  const baseUrl = import.meta.env.MEDUSA_URL
-  const client = new Medusa({ baseUrl, maxRetries: 3 })
-  const res = await client.products.list()
-  const products = res.products
+  const baseUrl = import.meta.env.MEDUSA_URL;
+  const client = new Medusa({ baseUrl, maxRetries: 3 });
+  const res = await client.products.list();
+  const products = res.products;
 
   return products.reduce<Param[]>(
-    (acc, product) => product.handle
-      ? [
-        ...acc,
-        {
-          params: {
-            handle: product.handle
-          },
-          props: {
-            product
-          }
-        }
-      ]
-      : acc,
+    (acc, product) =>
+      product.handle
+        ? [
+            ...acc,
+            {
+              params: {
+                handle: product.handle,
+              },
+              props: {
+                product,
+              },
+            },
+          ]
+        : acc,
     []
   );
 }
 
-const { product } = Astro.props;
+const product = Astro.props.product as Product;
+const variants = product.variants;
 const meta = {
   title: `Astro storefront for Medusa: ${product.title}`,
   description: product.description,
 };
+// Currently we use a single currency
+const cleanVariants = variants
+  .map(({ id, title, prices }) => ({
+    id,
+    title,
+    price: prices.find((price) => price.currency_code === 'eur')?.amount,
+  }))
+  .filter(({ price }) => Boolean(price));
 ---
+
 <Layout meta={meta}>
-  <div>{ product.title }!
-    <p>{product.description}</p>
-    <img src={product.thumbnail} />
+  <div class="flex flex-col md:flex-row mx-auto w-full md:w-2/3">
+    <div class={Classes.section}>
+      <div>
+        <Thumbnail src={product.thumbnail} alt={product.description} />
+      </div>
+    </div>
+    <div class={Classes.section}>
+      <h2 class="text-2xl font-bold">{product.title}</h2>
+      <p class="py-6">{product.description}</p>
+      <div class="flex flex-row">
+        {
+          cleanVariants.map(({ title }) => (
+            <button
+              type="button"
+              data-title={title}
+              class:list={[
+                'btn mr-2 last:mr-0',
+                { 'btn-outline': title !== DEFAULT_VARIANT_TITLE },
+              ]}
+            >
+              {title}
+            </button>
+          ))
+        }
+      </div>
+    </div>
+    <div class={Classes.section}>
+      {
+        cleanVariants.map(({ title, price, id }) => (
+          <div
+            data-title={title}
+            class:list={[
+              'pricebox border border-black rounded-lg p-4',
+              { hidden: title !== DEFAULT_VARIANT_TITLE },
+            ]}
+          >
+            <div class="text-4xl font-bold">{price} €</div>
+            <button type="button" class="add-to-cart btn btn-primary no-animation" data-variant-id={id}>
+              {Strings.addToCart}
+            </button>
+          </div>
+        ))
+      }
+    </div>
   </div>
 </Layout>
+
+<!-- Script for selecting variant. -->
+<script>
+  function setVariant(title: string) {
+    const variantButtons = document.querySelectorAll('button[data-title]');
+
+    variantButtons.forEach((variantButtonElement) => {
+      if ((variantButtonElement as HTMLElement).dataset.title === title) {
+        variantButtonElement.classList.remove('btn-outline');
+      } else {
+        variantButtonElement.classList.add('btn-outline');
+      }
+    });
+  }
+
+  function setPrice(title: string) {
+    const pricetags = document.querySelectorAll('.pricebox');
+
+    pricetags.forEach((pricetagElement) => {
+      if ((pricetagElement as HTMLElement).dataset.title === title) {
+        pricetagElement.classList.remove('hidden');
+      } else {
+        pricetagElement.classList.add('hidden');
+      }
+    });
+  }
+
+  const variantButtons = document.querySelectorAll('button[data-title]');
+
+  variantButtons.forEach((variantButtonElement) => {
+    variantButtonElement.addEventListener('click', () => {
+      const newVariantTitle = (variantButtonElement as HTMLElement).dataset
+        .title;
+
+      if (newVariantTitle) {
+        setVariant(newVariantTitle);
+        setPrice(newVariantTitle);
+      }
+    });
+  });
+</script>
+
+<!-- Script for adding items to cart. -->
+<script>
+  const addToCartButtons = document.querySelectorAll('button.add-to-cart');
+
+  addToCartButtons.forEach((addToCartButton) => {
+    const id = (addToCartButton as HTMLElement).dataset.variantId;
+
+    (addToCartButton as HTMLElement).addEventListener('click', () => {
+      console.debug(id);
+    });
+  });
+</script>
